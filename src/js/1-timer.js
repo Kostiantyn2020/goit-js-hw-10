@@ -1,41 +1,11 @@
-// Описаний в документації
 import flatpickr from 'flatpickr';
-// Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
-
-// Описаний у документації
 import iziToast from 'izitoast';
-// Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
 
-function convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
-
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-
-  return { days, hours, minutes, seconds };
-}
-
-const button = document.querySelector('button');
-const secondsElement = document.querySelector('span.value[data-seconds]');
-const minutesElement = document.querySelector('span.value[data-minutes]');
-const hoursElement = document.querySelector('span.value[data-hours]');
-const daysElement = document.querySelector('span.value[data-days]');
-
+const startButton = document.querySelector('button[data-start]');
+const datePicker = document.getElementById('datetime-picker');
 let userSelectedDate;
-
-button.disabled = true;
 
 const options = {
   enableTime: true,
@@ -44,48 +14,59 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
-    if (userSelectedDate.getTime() < Date.now()) {
-      button.disabled = true;
+    if (userSelectedDate <= new Date()) {
       iziToast.error({
-        position: 'topRight',
-        messageColor: 'white',
-        backgroundColor: 'red',
+        title: 'Error',
         message: 'Please choose a date in the future',
       });
+      startButton.disabled = true;
     } else {
-      button.disabled = false;
+      startButton.disabled = false;
     }
   },
 };
 
-const dateTimeInput = document.querySelector('#datetime-picker');
+flatpickr(datePicker, options);
 
-flatpickr(dateTimeInput, options);
+startButton.addEventListener('click', () => {
+  startButton.disabled = true;
+  datePicker.disabled = true;
 
-function updateTimerDisplay({ days, hours, minutes, seconds }) {
-  secondsElement.textContent = String(seconds).padStart(2, '0');
-  minutesElement.textContent = String(minutes).padStart(2, '0');
-  hoursElement.textContent = String(hours).padStart(2, '0');
-  daysElement.textContent = String(days).padStart(2, '0');
-}
-
-function handleBtnClick(event) {
-  button.disabled = true;
-
-  const intervalId = setInterval(() => {
-    let diff = userSelectedDate - Date.now();
-
-    if (diff <= 0) {
-      clearInterval(intervalId);
-      updateTimerDisplay({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      button.disabled = false;
+  const timer = setInterval(() => {
+    const timeLeft = userSelectedDate - new Date();
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      datePicker.disabled = false;
+      startButton.disabled = true;
       return;
     }
-
-    const timeLeft = convertMs(diff);
-
-    updateTimerDisplay(timeLeft);
+    updateTimerDisplay(convertMs(timeLeft));
   }, 1000);
+});
+
+function updateTimerDisplay({ days, hours, minutes, seconds }) {
+  document.querySelector('[data-days]').textContent = addLeadingZero(days);
+  document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
+  document.querySelector('[data-minutes]').textContent =
+    addLeadingZero(minutes);
+  document.querySelector('[data-seconds]').textContent =
+    addLeadingZero(seconds);
 }
 
-button.addEventListener('click', handleBtnClick);
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
+
+function convertMs(ms) {
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  const days = Math.floor(ms / day);
+  const hours = Math.floor((ms % day) / hour);
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+  return { days, hours, minutes, seconds };
+}
