@@ -3,7 +3,6 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-// Инициализация элементов DOM
 const datetimePicker = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('button[data-start]');
 const daysSpan = document.querySelector('[data-days]');
@@ -11,11 +10,9 @@ const hoursSpan = document.querySelector('[data-hours]');
 const minutesSpan = document.querySelector('[data-minutes]');
 const secondsSpan = document.querySelector('[data-seconds]');
 
-// Переменные для хранения выбранной даты и интервала таймера
 let userSelectedDate = null;
 let countdownInterval = null;
 
-// Настройки для flatpickr
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -36,17 +33,14 @@ const options = {
   },
 };
 
-// Инициализация flatpickr
 flatpickr(datetimePicker, options);
 
-// Обработчик клика по кнопке Start
 startButton.addEventListener('click', () => {
   startButton.disabled = true;
   datetimePicker.disabled = true;
   startCountdown();
 });
 
-// Функция для начала обратного отсчета
 function startCountdown() {
   countdownInterval = setInterval(() => {
     const now = new Date();
@@ -63,7 +57,6 @@ function startCountdown() {
   }, 1000);
 }
 
-// Функция для обновления значений таймера
 function updateTimer(ms) {
   const time = convertMs(ms);
   daysSpan.textContent = addLeadingZero(time.days);
@@ -72,7 +65,6 @@ function updateTimer(ms) {
   secondsSpan.textContent = addLeadingZero(time.seconds);
 }
 
-// Функция для конвертации миллисекунд в дни, часы, минуты и секунды
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -87,7 +79,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-// Функция для добавления ведущего нуля к числам меньше 10
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
