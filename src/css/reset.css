@@ -33,3 +33,61 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+#date-unchoosed {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto 30px;
+}
+
+#date-unchoosed h2 {
+  font-size: 24px;
+  color: #111827;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#date-unchoosed form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#date-unchoosed form label {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+#date-unchoosed form input#date-input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+#date-unchoosed form input#date-input:focus {
+  border-color: #2563eb;
+}
+
+#date-unchoosed form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#date-unchoosed form button:hover {
+  background-color: #1e40af;
+}

@@ -5,3 +5,105 @@
   |============================
 */
 @import url('./reset.css');
+
+/* src/css/styles.css */
+
+/* Общие стили */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Стили для формы поиска */
+form#search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+form#search-form input[name="searchQuery"] {
+  width: 300px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+form#search-form input[name="searchQuery"]:focus {
+  border-color: #007bff;
+}
+
+form#search-form button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#search-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Стили для галереи */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+/* Стили для карточек изображений */
+.photo-card {
+  width: calc((100% - 60px) / 4);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.photo-card:hover {
+  transform: translateY(-5px);
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #eee;
+}
+
+.photo-card .info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.photo-card .info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.photo-card .info p b {
+  color: #007bff;
+}
+
+/* Стили для лоадера */
+.loader {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: none;
+  /* Скрыто по умолчанию */
+}
